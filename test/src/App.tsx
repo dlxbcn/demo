@@ -5,7 +5,7 @@ import Exchange from "./components/Exchange";
 export default class App extends React.Component {
     state = {
         exchange: {
-            ifShow: true,
+            ifShow: false,
             title: '',
             date: new Date().toLocaleDateString(),
             currency: '',
