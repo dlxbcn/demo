@@ -14,6 +14,8 @@ export interface ExchangeData {
 }
 
 export default class Exchange extends React.Component<ExchangeData> {
+    private title: React.RefObject<HTMLInputElement> = React.createRef();
+    private amount: React.RefObject<HTMLInputElement> = React.createRef();
     state = {
         title: this.props.title,
         date: this.props.date,
@@ -34,9 +36,10 @@ export default class Exchange extends React.Component<ExchangeData> {
                     <div className="field">
                         <div className="field-title">Title</div>
                         <input className={`input-title ${this.state.errField === 'title' ? 'err' : ''}`}
-                               placeholder="Expense Title"
-                               value={this.state.title}
-                               onChange={this.onTitleChange}
+                            ref={this.title}
+                            placeholder="Expense Title"
+                            value={this.state.title}
+                            onChange={this.onTitleChange}
                         />
                         <div className="desc">Give this expense a title to be easily identified</div>
                     </div>
@@ -53,6 +56,7 @@ export default class Exchange extends React.Component<ExchangeData> {
                     <div className="field">
                         <div className="field-title">Amount</div>
                         <input className={`input-title ${this.state.errField === 'amount' ? 'err' : ''}`}
+                               ref={this.amount}
                                type="number"
                                placeholder="Total Amount"
                                value={this.state.amount}
@@ -95,10 +99,12 @@ export default class Exchange extends React.Component<ExchangeData> {
     }
     onSubmit = () => {
         if (this.state.title.trim() === '') {
+            this.title.current?.focus();
             this.setState({errField: 'title'});
             return;
         }
         if (+this.state.amount <= 0) {
+            this.amount.current?.focus();
             this.setState({errField: 'amount'});
             return;
         }
